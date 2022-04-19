@@ -13,8 +13,8 @@ urls <- glue("{root}{numbers}")
 
 # map over all urls and output a data frame ------------------------------------
 
-uoe-art.csv <- map_dfr(urls, scrape_page)
+uoe_art.csv <- map_dfr(urls, scrape_page)
 
 # write out data frame ---------------------------------------------------------
 
-write_csv(uoe_art, path = "data/uoe-art.csv")
+write_csv(uoe_art.csv, path = "data/uoe-art.csv")

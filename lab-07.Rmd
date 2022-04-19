@@ -30,18 +30,64 @@ uoe_art <- read_csv("data/uoe-art.csv")
 uoe_art <- uoe_art %>%
   separate(title, into = c("title", "date"), sep = "\\(") %>%
   mutate(year = str_remove(date, "\\)") %>% as.numeric()) %>%
-  select(title, artist, year, ___)
+  select(title, artist, year, link)
 ```
 
-### Exercise 10
+Its okay if we don't have a year!
 
-Remove this text, and add your answer for Exercise 10 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
 
 ### Exercise 11
 
-...
+```{r skim}
+skim(uoe_art)
+```
 
-Add exercise headings as needed.
+114 have artist missing, 1368 has year missing
+
+### Exercise 12
+
+```{r histogtram}
+
+ggplot(data = uoe_art, aes(x = year)) + geom_histogram(binwidth = 100)
+
+```
+
+
+### Exercise 13
+
+Because this is death mask (2), the code grabbed the 2 instead of the 1964
+
+```{r mutate}
+uoe_art <- uoe_art %>%
+  mutate(
+    year2 = if_else(year == 2, 1964, year)
+  )
+```
+
+```{r histogtram2}
+
+ggplot(data = uoe_art, aes(x = year2)) + geom_histogram(binwidth = 10)
+
+```
+
+### Exercise 14
+
+```{r artist}
+uoe_artist <- uoe_art %>%
+  filter(artist == "Emma Gillies")
+ggplot(data = uoe_artist, aes(x = artist)) + geom_bar()
+```
+Unknown (duh) and Emma Gillies had the most pieces of art. I know nothing about her.
+
+### Exercise 15
+
+
+```{r edit}
+uoe_art %>% 
+  filter(
+    str_detect(title , "child") |
+      str_detect(title , "Child")
+  )
+```
+
+there were 10 instances of child in the art
